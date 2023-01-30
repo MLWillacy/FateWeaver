@@ -1,8 +1,19 @@
 {
   "version": 2,
-  "dgSpecHash": "KZrXUQPKOINO3Juw30aFHwzJooifBHmP6AVXbbRW+3OmiTXZvrrHJlwj+RQ39DbRA9cXkYZxLYCj/c5MuxBo7g==",
+  "dgSpecHash": "hQ9Ya/3KOUT1bUSRFZIHdS/TyFTDvXO6+GAwLzalZC3fOU24FqKv5LfpsXMoX3+q8THJ1IU2NEACy9waBAysMQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Tough\\OneDrive\\Desktop\\Programming\\FateWeaver\\Fate1\\Fate1.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Tough\\.nuget\\packages\\bitmiracle.libtiff.net\\2.4.649\\bitmiracle.libtiff.net.2.4.649.nupkg.sha512",
+    "C:\\Users\\Tough\\.nuget\\packages\\ironsoftware.system.drawing\\2022.11.10457\\ironsoftware.system.drawing.2022.11.10457.nupkg.sha512",
+    "C:\\Users\\Tough\\.nuget\\packages\\ironxl.excel\\2022.12.11262\\ironxl.excel.2022.12.11262.nupkg.sha512",
+    "C:\\Users\\Tough\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\2.1.0\\microsoft.extensions.logging.abstractions.2.1.0.nupkg.sha512",
+    "C:\\Users\\Tough\\.nuget\\packages\\microsoft.netcore.platforms\\5.0.0\\microsoft.netcore.platforms.5.0.0.nupkg.sha512",
+    "C:\\Users\\Tough\\.nuget\\packages\\sixlabors.fonts\\1.0.0-beta18\\sixlabors.fonts.1.0.0-beta18.nupkg.sha512",
+    "C:\\Users\\Tough\\.nuget\\packages\\sixlabors.imagesharp\\2.1.3\\sixlabors.imagesharp.2.1.3.nupkg.sha512",
+    "C:\\Users\\Tough\\.nuget\\packages\\sixlabors.imagesharp.drawing\\1.0.0-beta15\\sixlabors.imagesharp.drawing.1.0.0-beta15.nupkg.sha512",
+    "C:\\Users\\Tough\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\5.0.0\\system.runtime.compilerservices.unsafe.5.0.0.nupkg.sha512",
+    "C:\\Users\\Tough\\.nuget\\packages\\system.text.encoding.codepages\\5.0.0\\system.text.encoding.codepages.5.0.0.nupkg.sha512"
+  ],
   "logs": []
 }
