@@ -13,8 +13,7 @@ class FateWeaver
         string myArmyPath = Path.Combine(Environment.CurrentDirectory, "MyArmy.txt");
         Army army = new Army(myArmyPath);
 
-        // Display the number of command line arguments.
-        Console.WriteLine(args.Length);
+        Console.WriteLine(army.Units[0].Weapons[0].Name);
 
     }
 }

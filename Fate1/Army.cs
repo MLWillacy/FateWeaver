@@ -43,9 +43,11 @@ namespace Fate1
                 }
                 catch
                 {
-                    Console.WriteLine("Unit: " + unitName + " does not exist in battletome: " + battleTomeName);
+                    Console.WriteLine("Unit: " + unitName + " does not exist or is incorrectly configured in battletome: " + battleTomeName);
                 }
             }
         }
+
+        public List<Unit> Units { get { return mUnits; } }
     }
 }
