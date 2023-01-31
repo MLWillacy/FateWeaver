@@ -102,7 +102,7 @@ namespace Fate1
 
         public string Name { get { return mName; } }
         public int PointCost { get { return mPointCost; } }
-        public int ModelCount { get { return mModelCount; } }
+        public int ModelCount { get { return mModelCount; } set { mModelCount = value; } }
         public int BaseSize { get { return mBaseSize; } }
         public string[] Keywords { get { return mKeywords; } }
         public List<Weapon> Weapons { get { return mWeapons;} }

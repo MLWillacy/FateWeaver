@@ -39,7 +39,28 @@ namespace Fate1
             {
                 try 
                 {
-                    mUnits.Add(new Unit(unitName,armyStatSheet));
+                    if (unitName.Contains('*'))
+                    {
+
+                        if (unitName.Contains("**"))
+                        {
+                            string reinforcedUnitName = unitName.Substring(0,unitName.Length - 2);
+                            Unit reinforcedUnit = new Unit(reinforcedUnitName, armyStatSheet);
+                            reinforcedUnit.ModelCount = reinforcedUnit.ModelCount * 3;
+                            mUnits.Add(reinforcedUnit);
+                        }
+                        else 
+                        {
+                            string reinforcedUnitName = unitName.Substring(0, unitName.Length - 1);
+                            Unit reinforcedUnit = new Unit(reinforcedUnitName, armyStatSheet);
+                            reinforcedUnit.ModelCount = reinforcedUnit.ModelCount * 2;
+                            mUnits.Add(reinforcedUnit);
+                        }
+                    }
+                    else
+                    {
+                        mUnits.Add(new Unit(unitName, armyStatSheet));
+                    }
                 }
                 catch
                 {
