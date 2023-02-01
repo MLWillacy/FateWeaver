@@ -27,8 +27,7 @@ namespace Fate1
             {
                 unitNames.Add(lineOfText);
             }
-
-            //need to deal with reinforced units
+            sr.Close();
 
             string path = Path.Combine(Environment.CurrentDirectory, battleTomeName + ".xlsx");
 
@@ -46,6 +45,8 @@ namespace Fate1
                     Console.WriteLine("Unit: " + unitName + " does not exist or is incorrectly configured in battletome: " + battleTomeName);
                 }
             }
+
+            mBattleTome.Close();
         }
 
         public List<Unit> Units { get { return mUnits; } }
