@@ -39,7 +39,7 @@ namespace Fate1
             {
                 try 
                 {
-                    mUnits.Add(new Unit(unitName,armyStatSheet));
+                        mUnits.Add(new Unit(unitName, armyStatSheet));
                 }
                 catch
                 {

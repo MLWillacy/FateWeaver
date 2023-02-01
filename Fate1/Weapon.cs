@@ -9,7 +9,13 @@ namespace Fate1
 {
     internal class Weapon
     {
-        private string mWeaponType; //either "missile" or "melee"
+        enum WeaponType
+        {
+            Missile,
+            Melee
+        }
+
+        private WeaponType mWeaponType; //either "missile" or "melee"
         private string mWeaponName;
         private int mAttacks;
         private int mRange;
@@ -21,7 +27,7 @@ namespace Fate1
         public Weapon(string[] pWeaponStats)
         {
             mWeaponName = pWeaponStats[0];
-            mWeaponType = pWeaponStats[1];
+            mWeaponType = (WeaponType)Enum.Parse(typeof(WeaponType),pWeaponStats[1]);
             mAttacks = int.Parse(pWeaponStats[3]);
             mRange = int.Parse(pWeaponStats[2]);
             mToHit = int.Parse(pWeaponStats[4]);
@@ -31,7 +37,7 @@ namespace Fate1
         }
 
         public string Name { get { return mWeaponName; } }
-        public string Type { get { return mWeaponType; } }
+        public string Type { get { return mWeaponType.ToString(); } }
         public int Attacks { get { return mAttacks; } }
         public int Range { get { return mRange;} }
         public int ToHit { get { return mToHit; } }

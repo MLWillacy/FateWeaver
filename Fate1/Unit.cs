@@ -26,6 +26,19 @@ namespace Fate1
         public Unit(string pUnitName,WorkSheet pUnitStatSheet)
         {
             int unitLocation = 0;
+            int timesReinforced = 1;
+
+            mName = pUnitName;
+            if (mName.Contains('*'))
+            {
+                pUnitName = pUnitName.Substring(0, pUnitName.Length - 1);
+                timesReinforced++;
+                if (mName.Contains("**"))
+                {
+                    timesReinforced++;
+                    pUnitName = pUnitName.Substring(0, pUnitName.Length - 1);
+                }
+            }
 
             for (int i = 1; i < pUnitStatSheet.Rows.Count(); i++)
             {
@@ -36,9 +49,8 @@ namespace Fate1
                 }
             }
 
-            mName = pUnitName;
             mPointCost = int.Parse(pUnitStatSheet["B" + unitLocation].ToString());
-            mModelCount = int.Parse(pUnitStatSheet["C" + unitLocation].ToString());
+            mModelCount = int.Parse(pUnitStatSheet["C" + unitLocation].ToString()) * timesReinforced;
             mBaseSize = int.Parse(pUnitStatSheet["D" + unitLocation].ToString());
 
             mWounds = int.Parse(pUnitStatSheet["E" + unitLocation].ToString());
@@ -66,43 +78,13 @@ namespace Fate1
                     arrayPtr = 0;
                 }
 
-                char lastChar = currentColumn.Last();
-                if (lastChar == 'Z')
-                {
-                    
-                    string newColumn = "";
-                    for (int j = currentColumn.Length - 1; j > -1; j--)
-                    {
-                        if (currentColumn[j] == 'Z')
-                        {                            
-                            newColumn = currentColumn.Substring(0, j) + 'A';
-                            if (j == 0)
-                            {
-                                newColumn = "A" + newColumn;
-                                currentColumn = newColumn;
-                                break;
-                            }
-                        }
-                        else
-                        {
-                            char nextChar = (char)(((int)currentColumn[j]) + 1);
-                            newColumn = currentColumn.Substring(0, j) + nextChar.ToString() + currentColumn.Substring(j + 1, currentColumn.Length - 1);
-                            break;
-                        }
-                        currentColumn = newColumn;
-                    }
-                }
-                else
-                {
-                    char nextChar = (char)(((int)lastChar) + 1);
-                    currentColumn = currentColumn.Substring(0,currentColumn.Length - 1) + nextChar.ToString();
-                }
+                currentColumn = pUnitStatSheet.NextCell(currentColumn);
             }
         }
 
         public string Name { get { return mName; } }
         public int PointCost { get { return mPointCost; } }
-        public int ModelCount { get { return mModelCount; } }
+        public int ModelCount { get { return mModelCount; } set { mModelCount = value; } }
         public int BaseSize { get { return mBaseSize; } }
         public string[] Keywords { get { return mKeywords; } }
         public List<Weapon> Weapons { get { return mWeapons;} }
