@@ -14,7 +14,10 @@ class FateWeaver
         string myArmyPath = Path.Combine(Environment.CurrentDirectory, "MyArmy.txt");
         Army army = new Army(myArmyPath);
 
-        Console.WriteLine(army.Units[0].ModelCount);
+        CombatEncounter test = new CombatEncounter(army.Units[0], army.Units[1]);
+        float avDmg = test.AverageDamage();
+
+        Console.WriteLine(army.Units[0].Name + " would deal " + avDmg + " damage to " + army.Units[1].Name );
 
     }
 }
