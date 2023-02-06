@@ -15,9 +15,11 @@ class FateWeaver
         Army army = new Army(myArmyPath);
 
         CombatEncounter test = new CombatEncounter(army.Units[0], army.Units[1]);
-        float avDmg = test.AverageDamage();
+        double avDmg = test.AverageDamage();
+        double killPercent = test.KillChance(test.Attacker.Weapons[0]);
 
-        Console.WriteLine(army.Units[0].Name + " would deal " + avDmg + " damage to " + army.Units[1].Name );
+        Console.WriteLine(test.Attacker.Name + " would deal " + avDmg + " damage to " + test.Defender.Name);//test this
+        Console.WriteLine(test.Attacker.Name + " has a " + killPercent + "% chance to kill " + test.Defender.Name + " with weapon " + test.Attacker.Weapons[0].Name);
 
     }
 }
