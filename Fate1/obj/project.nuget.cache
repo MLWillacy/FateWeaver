@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "hQ9Ya/3KOUT1bUSRFZIHdS/TyFTDvXO6+GAwLzalZC3fOU24FqKv5LfpsXMoX3+q8THJ1IU2NEACy9waBAysMQ==",
+  "dgSpecHash": "6WrRNQdwbky0vWJEqoq6BTRIoh0WQBWjRJZkovucCMQBjUsl+z9TEC3IQg9b+QFWcwLCvwyAWX7zHjnZcWkx9g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Tough\\OneDrive\\Desktop\\Programming\\FateWeaver\\Fate1\\Fate1.csproj",
+  "projectFilePath": "D:\\OtherProgram\\FateWeaver\\Fate1\\Fate1.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Tough\\.nuget\\packages\\bitmiracle.libtiff.net\\2.4.649\\bitmiracle.libtiff.net.2.4.649.nupkg.sha512",
     "C:\\Users\\Tough\\.nuget\\packages\\ironsoftware.system.drawing\\2022.11.10457\\ironsoftware.system.drawing.2022.11.10457.nupkg.sha512",

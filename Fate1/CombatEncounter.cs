@@ -53,32 +53,52 @@ namespace Fate1
         public double KillChance()
         {
             double probAll = 0;
-            probAll += KillChance(mAttacker.Weapons);
+            probAll += KillChance(mAttacker.Weapons, new List<int>(),0);
 
             return probAll;
         }
 
-        public double KillChance(List<Weapon> pWeapons)
+        public double KillChance(List<Weapon> pWeapons, List<int> pCurrentIterrations, int pWeaponPtr)
         {
             int defenderHealth = mDefender.ModelCount * mDefender.Wounds;
             double probAll = 0;
 
-            for (int i = 0; i < pWeapons.Count; i+= pWeapons[0].Damage)
+            if (pCurrentIterrations.Count < pWeapons.Count)
+            { pCurrentIterrations.Add(0); }
+
+            int temp = pWeaponPtr;
+            for (int i = 0; i < pWeapons[pWeaponPtr].MaxDamage(mAttacker.ModelCount); i+= pWeapons[pWeaponPtr].Damage)
             {
-                for (int j = 0; j < pWeapons.Count; j+= pWeapons[1].Damage)
+                //pass a list of int? where weapon[0] corresponds to int[0]
+
+                int total = 0;
+                foreach (int j in pCurrentIterrations)
                 {
-                    if (i + j == 20)
-                    {
-                        double probWeapon0doesIdmg = UsefulMethods.BinomialDistribution(pWeapons[0].Attacks * mAttacker.ModelCount, i / pWeapons[0].Damage, ChanceToDamage(pWeapons[0]));
-                        double probWeapon1doesJdmg = UsefulMethods.BinomialDistribution(pWeapons[1].Attacks * mAttacker.ModelCount, j / pWeapons[1].Damage, ChanceToDamage(pWeapons[1]));
-
-                        probAll += probWeapon0doesIdmg * probWeapon1doesJdmg ;
-                    }
-
+                    total += j;
                 }
+
+                if (total == defenderHealth)
+                {
+                    double probThisCombo = 1;
+                    for (int k = 0; k < pCurrentIterrations.Count; k++)
+                    {
+                        probThisCombo = probThisCombo * UsefulMethods.BinomialDistribution(pWeapons[k].Attacks * mAttacker.ModelCount, pCurrentIterrations[k] / pWeapons[k].Damage, ChanceToDamage(pWeapons[k]));
+                    }
+                    probAll += probThisCombo;
+                }
+                else if (total < defenderHealth && pWeaponPtr < pWeapons.Count - 1)
+                {
+                    probAll = probAll * KillChance(pWeapons, pCurrentIterrations, pWeaponPtr + 1);
+                }
+                pCurrentIterrations[pWeaponPtr]++;
+
             }
 
-                return probAll;
+            double killChance = (1 - probAll) * 100;
+
+            pCurrentIterrations[pWeaponPtr] = temp++;
+
+            return killChance;
         }
         public double KillChance(Weapon pWeapon)
         {
