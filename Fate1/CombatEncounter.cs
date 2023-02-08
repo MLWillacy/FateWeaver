@@ -52,24 +52,34 @@ namespace Fate1
 
         public double KillChance()
         {
-            float killChance = 0;
+            double probAll = 0;
+            probAll += KillChance(mAttacker.Weapons);
 
-            int defenderHealth = mDefender.ModelCount * mDefender.Wounds;
-            int maxDamage = 0;
-            for (int i =0; i < mAttacker.Weapons.Count; i++)
-            {
-                maxDamage = maxDamage + mAttacker.ModelCount * mAttacker.Weapons[i].Damage * mAttacker.Weapons[i].Attacks;
-            }
-
-            if(maxDamage > defenderHealth)
-            { return 0; }
-
-            int savesFailed = defenderHealth / mAttacker.Weapons[0].Damage;
-
-
-            return killChance;
+            return probAll;
         }
 
+        public double KillChance(List<Weapon> pWeapons)
+        {
+            int defenderHealth = mDefender.ModelCount * mDefender.Wounds;
+            double probAll = 0;
+
+            for (int i = 0; i < pWeapons.Count; i+= pWeapons[0].Damage)
+            {
+                for (int j = 0; j < pWeapons.Count; j+= pWeapons[1].Damage)
+                {
+                    if (i + j == 20)
+                    {
+                        double probWeapon0doesIdmg = UsefulMethods.BinomialDistribution(pWeapons[0].Attacks * mAttacker.ModelCount, i / pWeapons[0].Damage, ChanceToDamage(pWeapons[0]));
+                        double probWeapon1doesJdmg = UsefulMethods.BinomialDistribution(pWeapons[1].Attacks * mAttacker.ModelCount, j / pWeapons[1].Damage, ChanceToDamage(pWeapons[1]));
+
+                        probAll += probWeapon0doesIdmg * probWeapon1doesJdmg ;
+                    }
+
+                }
+            }
+
+                return probAll;
+        }
         public double KillChance(Weapon pWeapon)
         {
             double killChance = 0;
