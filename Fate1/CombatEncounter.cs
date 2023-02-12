@@ -19,11 +19,12 @@ namespace Fate1
 
         public Unit Attacker { get { return mAttacker; } }
         public Unit Defender { get { return mDefender; } }
-        public double ChanceToDamage(Weapon pWeapon)
+
+        private double ChanceToDamage(Weapon pWeapon, Unit pDefender)
         {
             double probabilityToWound = ((double)(7 - pWeapon.ToHit) / 6) * ((double)(7 - pWeapon.ToWound) / 6);
 
-            int rendedSave = mDefender.Save + pWeapon.Rend;
+            int rendedSave = pDefender.Save + pWeapon.Rend;
             double probabilityToSave;
             if (rendedSave > 6)
             {
@@ -44,10 +45,29 @@ namespace Fate1
             {
                 Weapon currentWeapon = mAttacker.Weapons[i];
                 int totalAttacks = mAttacker.ModelCount * currentWeapon.Attacks;
-                averageDamage = averageDamage + (totalAttacks * ChanceToDamage(currentWeapon) * currentWeapon.Damage);
+                averageDamage = averageDamage + (totalAttacks * ChanceToDamage(currentWeapon, mDefender) * currentWeapon.Damage);
             }
 
             return averageDamage;
+        }
+        public double AverageDamage(Unit pAttacker, Unit pDefender)
+        {
+            double averageDamage = 0;
+
+            for (int i = 0; i < pAttacker.Weapons.Count; i++)
+            {
+                Weapon currentWeapon = pAttacker.Weapons[i];
+                int totalAttacks = pAttacker.ModelCount * currentWeapon.Attacks;
+                averageDamage = averageDamage + (totalAttacks * ChanceToDamage(currentWeapon, pDefender) * currentWeapon.Damage);
+            }
+
+            return averageDamage;
+        }
+
+        private void DealDamage(Unit pDefender, double pDamage)
+        {
+            mDefender.Health = (int)(mDefender.Health - Math.Ceiling(pDamage));
+            mDefender.ModelCount = (int)(mDefender.ModelCount - Math.Ceiling(mDefender.ModelCount/pDamage));
         }
 
         public double KillChance()
@@ -57,7 +77,6 @@ namespace Fate1
 
             return probAll;
         }
-
         public double KillChance(List<Weapon> pWeapons, List<int> pCurrentIterrations, int pWeaponPtr)
         {
             int defenderHealth = mDefender.ModelCount * mDefender.Wounds;
@@ -69,7 +88,6 @@ namespace Fate1
             int temp = pWeaponPtr;
             for (int i = 0; i < pWeapons[pWeaponPtr].MaxDamage(mAttacker.ModelCount); i+= pWeapons[pWeaponPtr].Damage)
             {
-                //pass a list of int? where weapon[0] corresponds to int[0]
 
                 int total = 0;
                 foreach (int j in pCurrentIterrations)
@@ -82,7 +100,7 @@ namespace Fate1
                     double probThisCombo = 1;
                     for (int k = 0; k < pCurrentIterrations.Count; k++)
                     {
-                        probThisCombo = probThisCombo * UsefulMethods.BinomialDistribution(pWeapons[k].Attacks * mAttacker.ModelCount, pCurrentIterrations[k] / pWeapons[k].Damage, ChanceToDamage(pWeapons[k]));
+                        probThisCombo = probThisCombo * UsefulMethods.BinomialDistribution(pWeapons[k].Attacks * mAttacker.ModelCount, pCurrentIterrations[k] / pWeapons[k].Damage, ChanceToDamage(pWeapons[k],mDefender));
                     }
                     probAll += probThisCombo;
                 }
@@ -113,11 +131,28 @@ namespace Fate1
 
             int minAttacks = defenderHealth / pWeapon.Damage;
 
-            double probToDamage = ChanceToDamage(pWeapon);
+            double probToDamage = ChanceToDamage(pWeapon, mDefender);
 
             killChance = (1 - UsefulMethods.BinomialDistribution(totalAttacks,minAttacks,probToDamage)) * 100;
 
             return killChance;
+        }
+
+        public bool TwoRoundKill()
+        {
+            Unit attackerTemp = mAttacker;
+            Unit defenderTemp = mDefender;
+
+            DealDamage(defenderTemp, AverageDamage(attackerTemp, defenderTemp));
+            DealDamage(attackerTemp, AverageDamage(defenderTemp, attackerTemp));
+            DealDamage(defenderTemp, AverageDamage(attackerTemp, defenderTemp));
+
+            if (defenderTemp.Health < 0)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
