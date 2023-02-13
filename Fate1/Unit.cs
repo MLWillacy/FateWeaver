@@ -11,6 +11,8 @@ namespace Fate1
 {
     internal class Unit
     {
+        private int mUnique;
+
         private string mName;
         private int mPointCost;
         private int mModelCount;
@@ -23,8 +25,12 @@ namespace Fate1
         private int mBravery;
         private int mSave;
 
-        public Unit(string pUnitName,WorkSheet pUnitStatSheet)
+        private int mHealth;
+
+        public Unit(string pUnitName,WorkSheet pUnitStatSheet, int pUnique)
         {
+            mUnique = pUnique;
+
             int unitLocation = 0;
             int timesReinforced = 1;
 
@@ -58,6 +64,8 @@ namespace Fate1
             mBravery = int.Parse(pUnitStatSheet["G" + unitLocation].ToString());
             mSave = int.Parse(pUnitStatSheet["H" + unitLocation].ToString());
 
+            mHealth = mWounds * mModelCount;
+
             string keywordsInputString = pUnitStatSheet["I" + unitLocation].ToString();
             mKeywords = keywordsInputString.Split(',');
 
@@ -82,9 +90,11 @@ namespace Fate1
             }
         }
 
+        public int Unique { get { return mUnique; } }
         public string Name { get { return mName; } }
         public int PointCost { get { return mPointCost; } }
         public int ModelCount { get { return mModelCount; } set { mModelCount = value; } }
+        public int Health { get { return mHealth; } set { mHealth = value; } }
         public int BaseSize { get { return mBaseSize; } }
         public string[] Keywords { get { return mKeywords; } }
         public List<Weapon> Weapons { get { return mWeapons;} }

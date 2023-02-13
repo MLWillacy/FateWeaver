@@ -45,5 +45,9 @@ namespace Fate1
         public int Rend { get { return mRend; } }
         public int Damage { get { return mDamage; } }
 
+        public int MaxDamage(int pModelCount)
+        {
+            return pModelCount * mAttacks * mDamage;
+        }
     }
 }

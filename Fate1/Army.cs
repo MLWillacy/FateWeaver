@@ -34,15 +34,15 @@ namespace Fate1
             mBattleTome = WorkBook.Load(path);
             WorkSheet armyStatSheet = mBattleTome.WorkSheets[0];
 
-            foreach(string unitName in unitNames)
+            for (int i = 0; i < unitNames.Count; i++)
             {
                 try 
                 {
-                        mUnits.Add(new Unit(unitName, armyStatSheet));
+                        mUnits.Add(new Unit(unitNames[i], armyStatSheet,i));
                 }
                 catch
                 {
-                    Console.WriteLine("Unit: " + unitName + " does not exist or is incorrectly configured in battletome: " + battleTomeName);
+                    Console.WriteLine("Unit: " + unitNames[i] + " does not exist or is incorrectly configured in battletome: " + battleTomeName);
                 }
             }
 
